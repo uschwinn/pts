@@ -15,11 +15,6 @@ This lab uses the Oracle Text `fuzzy()` operator. Fuzzy matching expands a keywo
 
 You can maintain a hybrid vector index with the same general operations as an Oracle Text index. These include synchronization, optimization, and automatic maintenance.
 
-By default, a hybrid vector index uses `MAINTENANCE AUTO`. In this mode, base-table `INSERT`, `UPDATE`, and `DELETE` operations synchronize to the index in the background. Oracle manages the synchronization interval.
-
-If an application requires a different synchronization policy, configure `MAINTENANCE MANUAL` and select `SYNC(MANUAL)`, `SYNC(EVERY ...)`, or `SYNC(ON COMMIT)`. You can define these settings during index creation or change them later with `ALTER INDEX`.
-
-In this lab, you change the synchronization policy to `ON COMMIT`. After a transaction modifies indexed source text and commits, Oracle synchronizes the hybrid vector index as part of commit processing. Subsequent searches can then see the change.
 
 
 ### Objectives
@@ -30,9 +25,8 @@ In this lab, you will:
 - Use `DBMS_HYBRID_VECTOR.SEARCHPIPELINE` to inspect scores, ranks and chunk text.
 - Add `fuzzy()` to the Oracle Text condition.
 - Compare the text, vector and the final scores returned by hybrid search.
-- Update an indexed document and confirm that `SYNC(ON COMMIT)` makes the change searchable.
 
-This lab contains four tasks.
+This lab contains three tasks.
 
 Estimated Time: 30 minutes.
 
@@ -180,88 +174,6 @@ Oracle Text `fuzzy()` expands a term to similarly spelled terms that exist in th
 
     ![Fuzzy-search result.](images/hvi-intersect-fuzzy.png " ")
 
-## Task 4: Update a document and search again
-
-By default, a hybrid vector index uses `MAINTENANCE AUTO`, which synchronizes DML changes in the background at Oracle-managed intervals. To make synchronization predictable for this lab, change the maintenance mode to `MAINTENANCE MANUAL` with `SYNC(ON COMMIT)`.
-
-1. Run the following `ALTER INDEX` command to change the synchronization mode.
-
-    ```[]
-    <copy>
-    ALTER INDEX HYBRID_IDX REBUILD
-      PARAMETERS('REPLACE METADATA MAINTENANCE MANUAL SYNC(ON COMMIT)');
-    </copy>
-    ```
-
-    With `REPLACE METADATA`, the `REBUILD` operation updates index metadata rather than rebuilding all index data. The operation therefore completes quickly. After this change, inserts, updates, and deletes synchronize to the index during `COMMIT`, rather than at Oracle-managed background intervals.
-
-   See the image below:
-
-    ![Alter the index and query the status](images/hvi-alterindex.png " ")
-
-  
-
-2. Check the status in the `CTX_USER_INDEXES` view.
-
-    ```[]
-    <copy>
-    SELECT idx_sync_type,
-           idx_sync_interval,
-           idx_maintenance_type
-    FROM   ctx_user_indexes
-    WHERE  idx_name = 'HYBRID_IDX';
-    </copy>
-    ```
-
-    ![Query the maintenance status.](images/hvi-view-maintenance.png " ")
-
-
-3. Replace the text for the `Black hole` sample row and commit the transaction.
-
-    This step deliberately replaces the indexed text for one workshop row with a blank value. Do not use this statement on production data.
-
-    ```[]
-    <copy>
-    UPDATE wiki_data
-    SET    text = ' '
-    WHERE  title = 'Black hole';
-
-    COMMIT;
-    </copy>
-    ```
-
-    ![Update the WIKI_DATA sample row.](images/hvi-view-maintenance.png " ")
-
-4. Run the query from Task 2 again and compare the results.
-    
-    ```[]
-    <copy>
-    SELECT p.title,
-           h.score,
-           h.vector_score,
-           h.text_score,
-           h.vector_rank,
-           h.text_rank,
-           h.chunk_text
-    FROM   wiki_data p,
-           DBMS_HYBRID_VECTOR.SEARCHPIPELINE(
-             JSON('{
-               "hybrid_index_name": "HYBRID_IDX",
-               "vector": {
-                 "search_text": "What are major scientific discoveries in Physics made by scientists in the last century?"
-               },
-               "text": {
-                "contains": "Quantum & Mechanics"
-               },
-               "search_fusion": "INTERSECT"
-             }')
-           ) h
-    WHERE  h.doc_rowid = p.rowid;
-    </copy>
-    ```
-    ![SEARCHPIPELINE results after the update.](images/hvi-intersect-searchpipeline-afterupdate.png " ")
-
-    The result now has eight rows and no longer includes the document titled `Black hole`.
 
 ## Wrap-up
 
@@ -273,7 +185,6 @@ This lab used three hybrid retrieval patterns:
 
 `UNION` broadens recall by retaining rows from either search signal. `TEXT_ONLY` returns keyword-driven results. Both use the same JSON query structure with a different `search_fusion` value.
 
-You also changed hybrid-index maintenance to `SYNC(ON COMMIT)` and confirmed that a committed source-text update affects subsequent searches.
 
 ## Learn More
 
