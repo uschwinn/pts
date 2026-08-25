@@ -95,7 +95,7 @@ Estimated Time: 20 minutes
     ```
     See the image below:
 
-    ![preference creation](images/hvi-preference.png " ")
+    ![Create vector preference](images/hvi-preference.png " ")
 
     
      The view exposes the stored preference values for the current schema. Use `CTX_PREFERENCE_VALUES` when you need to inspect preferences outside the current schema and have the required access.
@@ -114,7 +114,7 @@ Estimated Time: 20 minutes
 
     See the image below:
 
-    ![HVI creation](images/hvi_create.png " ")
+    ![Create hybrid vector index](images/hvi_create.png " ")
 
   
     
@@ -164,7 +164,7 @@ Estimated Time: 20 minutes
     
     See the image below:
 
-    ![Index summary.](images/hvi-index-column.png " ")
+    ![Display information](images/hvi-index-column.png " ")
 
 
 ## Task 3: Inspect the Generated Objects
@@ -253,6 +253,7 @@ For querying or inspecting this data, use the associated view `HYBRID_IDX$VECTOR
 Next, query `HYBRID_IDX` with keyword, semantic, and hybrid searches.
 
 ## Acknowledgements
+* **Author** - - Ulrike Schwinn, Product Manager, AI Vector Search
+* **Contributors** - Andy Rivenes, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Ulrike Schwinn, August 2026
 
-* **Author** - Ulrike Schwinn, Product Manager, AI Vector Search
-* **Last Updated By/Date** - July, 2026

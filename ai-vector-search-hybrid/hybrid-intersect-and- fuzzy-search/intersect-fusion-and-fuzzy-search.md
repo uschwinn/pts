@@ -28,7 +28,7 @@ In this lab, you will:
 
 This lab contains three tasks.
 
-Estimated Time: 30 minutes.
+Estimated Time: 20 minutes.
 
 ### Prerequisites
 
@@ -57,7 +57,7 @@ Find articles about major discoveries in physics. Require the text condition to 
                             "search_text": "What are major scientific discoveries in Physics made by scientists in the last century?"
                           },
                           "text": {
-                            "contains": "Quantum & Mechanics"
+                            "contains": "Quantum Mechanics"
                           },
                           "search_fusion": "INTERSECT",
                           "return": {
@@ -155,7 +155,7 @@ Oracle Text `fuzzy()` expands a term to similarly spelled terms that exist in th
                  "search_text": "What are major scientific discoveries in Physics made by scientists in the last century?"
                },
                "text": {
-                 "contains": "Quantum & fuzzy(Mechannicks)"
+                 "contains": "Quantum fuzzy(Mechannicks)"
                },
                "search_fusion": "INTERSECT"
              }')
@@ -193,6 +193,6 @@ This lab used three hybrid retrieval patterns:
 - [Oracle Text CONTAINS Query Operators](https://docs.oracle.com/en/database/oracle/oracle-database/26/ccref/oracle-text-CONTAINS-query-operators.html)
 
 ## Acknowledgements
-
-* **Author** - TODO
-* **Last Updated By/Date** - TODO
+* **Author** - - Ulrike Schwinn, Product Manager, AI Vector Search
+* **Contributors** - Andy Rivenes, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Ulrike Schwinn, August 2026

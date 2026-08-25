@@ -204,6 +204,7 @@ You now have a semantic-search baseline at both the chunk and document level. In
 - [Understand Hybrid Search](https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/understand-hybrid-search.html)
 
 ## Acknowledgements
+* **Author** - - Ulrike Schwinn, Product Manager, AI Vector Search
+* **Contributors** - Andy Rivenes, Product Manager, AI Vector Search
+* **Last Updated By/Date** - Ulrike Schwinn, August 2026
 
-- Oracle AI Vector Search documentation
-- Oracle LiveLabs workshop conventions
