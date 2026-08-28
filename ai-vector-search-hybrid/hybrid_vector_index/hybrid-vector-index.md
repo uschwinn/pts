@@ -84,7 +84,7 @@ Estimated Time: 20 minutes
 
 3. Review the stored preference values.
 
-     ```[]
+    ```[]
     <copy>
     SELECT prv_attribute,
            prv_value
@@ -98,7 +98,7 @@ Estimated Time: 20 minutes
     ![Create vector preference](images/hvi-preference.png " ")
 
     
-     The view exposes the stored preference values for the current schema. Use `CTX_PREFERENCE_VALUES` when you need to inspect preferences outside the current schema and have the required access.
+    The view exposes the stored preference values for the current schema. Use `CTX_PREFERENCE_VALUES` when you need to inspect preferences outside the current schema and have the required access.
 
 4. Create the index with the reusable `my_vectorizer_pref` preference.
 
@@ -137,7 +137,7 @@ Estimated Time: 20 minutes
 
     `IDX_STATUS` should be `INDEXED`. If the document count differs from the table row count, inspect the index errors before you search the index.
 
-     See the image below:
+    See the image below:
 
     ![List index attributes](images/hvi-properties.png " ")
 
@@ -156,7 +156,7 @@ Estimated Time: 20 minutes
 
     ```[]
     <copy>
-   INFO wiki_data
+    INFO wiki_data
     </copy>
     ```
 
@@ -182,7 +182,8 @@ For querying or inspecting this data, use the associated view `HYBRID_IDX$VECTOR
     INFO DR$HYBRID_IDX$VR
     </copy>
     ```
-   See the image below:
+
+    See the image below:
 
     ![List columns and indexes](images/hvi-vectorchunks-table-objects.png " ")
 
@@ -237,7 +238,7 @@ For querying or inspecting this data, use the associated view `HYBRID_IDX$VECTOR
 
     Copy a `DOC_ROWID` value from the previous query and replace `replace-with-doc_rowid`, keeping the single quotes. Compare `DOC_CHUNK_TEXT` with the source row. This shows where Oracle splits the document while retaining its source-row relationship.
 
-     See the image below:
+    See the image below:
 
     ![List sample text](images/hvi-one-textdocument.png " ")
 
